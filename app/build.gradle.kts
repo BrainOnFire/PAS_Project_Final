@@ -1,6 +1,9 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
+
+    //Google Services Gradle Plugins
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -66,4 +69,9 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+
+    // Import the Firebase BoM & Bundle
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.bundles.firebase)
+
 }

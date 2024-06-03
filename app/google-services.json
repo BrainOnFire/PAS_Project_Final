@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "677491417848",
+    "project_id": "pasprojectlzg",
+    "storage_bucket": "pasprojectlzg.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:677491417848:android:8f73aede34f4ab64ba510d",
+        "android_client_info": {
+          "package_name": "com.lzg.pas_project_final"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDzyU-1uxZdDR8e9fr9VxImy5Bvs4N-HrE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

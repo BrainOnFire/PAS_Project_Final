@@ -24,8 +24,18 @@ androidx-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-toolin
 androidx-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
 androidx-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
 androidx-material3 = { group = "androidx.compose.material3", name = "material3" }
+firebase-bom = { module = "com.google.firebase:firebase-bom", name = "firebase-bom" }
+firebase-auth = { module = "com.google.firebase:firebase-auth", name = "firebase-auth" }
+firebase-analytics = { module = "com.google.firebase:firebase-analytics", name = "firebase-analytics" }
+firebase-firestore = { module = "com.google.firebase:firebase-firestore", name = "firebase-firestore" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 
+[bundles]
+firebase = [
+    "firebase-auth",
+    "firebase-analytics",
+    "firebase-firestore"
+]
