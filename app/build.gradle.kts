@@ -73,7 +73,20 @@ dependencies {
     debugImplementation(libs.androidx.ui.test.manifest)
 
     // Import the Firebase BoM & Bundle
-    implementation(platform(libs.firebase.bom))
-    implementation(libs.bundles.firebase)
+    //implementation(platform(libs.firebase.bom))
+    //implementation(libs.bundles.firebase)
+
+    // Google Sign In SDK
+    implementation("com.google.android.gms:play-services-auth:21.2.0")
+
+    // Firebase SDK
+    implementation(platform("com.google.firebase:firebase-bom:33.1.0"))
+    implementation("com.google.firebase:firebase-database-ktx")
+    implementation("com.google.firebase:firebase-storage-ktx")
+    implementation("com.google.firebase:firebase-auth-ktx")
+
+    // Firebase UI Library
+    implementation("com.firebaseui:firebase-ui-auth:8.0.2")
+    implementation("com.firebaseui:firebase-ui-database:8.0.2")
 
 }
