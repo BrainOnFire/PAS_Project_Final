@@ -6,3 +6,10 @@ plugins {
     //Google Services Gradle Plugins
     id("com.google.gms.google-services") version "4.4.2" apply false
 }
+
+buildscript {
+    dependencies {
+        //Maps SDK Gradle Plugins
+        classpath("com.google.android.libraries.mapsplatform.secrets-gradle-plugin:secrets-gradle-plugin:2.0.1")
+    }
+}

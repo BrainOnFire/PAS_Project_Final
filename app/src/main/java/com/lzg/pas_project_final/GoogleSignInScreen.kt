@@ -6,7 +6,11 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Email
+import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material3.Button
+import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -38,7 +42,12 @@ fun SignInScreen() {
             value = email ,
             onValueChange = { email = it },
             label = { Text(text = "Email") },
-            //leadingIcon = {},
+            leadingIcon = {
+                Icon(
+                    imageVector = Icons.Filled.Email,
+                    contentDescription = "Email Icon"
+                )
+            },
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(16.dp)
@@ -47,11 +56,18 @@ fun SignInScreen() {
             value = password,
             onValueChange = { password = it },
             label = { Text(text = "Password") },
+            leadingIcon = {
+                Icon(
+                    imageVector = Icons.Filled.Lock,
+                    contentDescription = "Password Icon"
+                )
+            },
             visualTransformation = PasswordVisualTransformation(),
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(16.dp)
         )
+
         if (showError) {
             Text(
                 text = "Invalid email or password",
@@ -59,23 +75,31 @@ fun SignInScreen() {
                 modifier = Modifier.padding(8.dp)
             )
         }
+
         Button(
             onClick = {
                 showError = false
                 auth.signInWithEmailAndPassword(email, password)
                     .addOnCompleteListener { task ->
-                        if (task.isSuccessful) {
+                        if (email.isNotEmpty() && password.isNotEmpty() && task.isSuccessful){
                             // Sign in success, update UI with the signed-in user's information
                             Log.d("SignInScreen", "signInWithEmail:success")
                             val user = auth.currentUser
                             // Navigate to the next screen or update UI accordingly
-                        } else {
+                        }
+
+                        else if (email.isEmpty() || password.isEmpty() && !task.isSuccessful) {
+                            showError = true
+                        }
+
+                        else {
                             // If sign in fails, display a message to the user.
                             Log.w("SignInScreen", "signInWithEmail:failure", task.exception)
                             showError = true
                         }
                     }
             },
+            enabled = email.isNotEmpty() && password.isNotEmpty(),
             modifier = Modifier.padding(16.dp)
         ) {
             Text(text = "Sign In")

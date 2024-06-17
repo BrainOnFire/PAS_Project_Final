@@ -4,6 +4,9 @@ plugins {
 
     //Google Services Gradle Plugins
     id("com.google.gms.google-services")
+
+    //Maps Platform Secrets Gradle Plugin
+    id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
 }
 
 android {
@@ -62,8 +65,10 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
-    implementation(libs.firebase.common.ktx)
-    implementation(libs.firebase.auth.ktx)
+    //implementation(libs.firebase.common.ktx)
+    //implementation(libs.firebase.auth.ktx)
+    implementation(libs.androidx.lifecycle.livedata.ktx)
+    //implementation(libs.firebase.auth)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -72,21 +77,32 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 
-    // Import the Firebase BoM & Bundle
+    //Import the Firebase BoM & Bundle
     //implementation(platform(libs.firebase.bom))
     //implementation(libs.bundles.firebase)
 
-    // Google Sign In SDK
-    implementation("com.google.android.gms:play-services-auth:21.2.0")
+    //Google Sign In SDK
+    //implementation("com.google.android.gms:play-services-auth:21.2.0")
 
-    // Firebase SDK
+    //Firebase SDK
     implementation(platform("com.google.firebase:firebase-bom:33.1.0"))
-    implementation("com.google.firebase:firebase-database-ktx")
-    implementation("com.google.firebase:firebase-storage-ktx")
-    implementation("com.google.firebase:firebase-auth-ktx")
+    implementation("com.google.firebase:firebase-database")
+    implementation("com.google.firebase:firebase-storage")
+    implementation("com.google.firebase:firebase-auth")
+    implementation("com.google.firebase:firebase-firestore")
 
-    // Firebase UI Library
-    implementation("com.firebaseui:firebase-ui-auth:8.0.2")
-    implementation("com.firebaseui:firebase-ui-database:8.0.2")
+    //Firebase UI Library
+    //implementation("com.firebaseui:firebase-ui-auth")
+    //implementation("com.firebaseui:firebase-ui-database")
 
+    //Maps SDK Dependencies
+    implementation("com.google.android.gms:play-services-maps:18.2.0")
+    implementation("com.google.maps.android:maps-compose:5.0.3")
+
+    // Optionally, you can include the Compose utils library for Clustering,
+    // Street View metadata checks, etc.
+    implementation("com.google.maps.android:maps-compose-utils:5.0.3")
+
+    // Optionally, you can include the widgets library for ScaleBar, etc.
+    implementation("com.google.maps.android:maps-compose-widgets:5.0.3")
 }
