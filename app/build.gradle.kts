@@ -81,6 +81,9 @@ dependencies {
     //implementation(platform(libs.firebase.bom))
     //implementation(libs.bundles.firebase)
 
+    //Navigation
+    implementation("androidx.navigation:navigation-compose:2.7.7")
+
     //Google Sign In SDK
     //implementation("com.google.android.gms:play-services-auth:21.2.0")
 

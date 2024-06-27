@@ -1,6 +1,7 @@
 package com.lzg.pas_project_final
 
 import android.util.Log
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -11,6 +12,8 @@ import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.OutlinedIconButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -21,23 +24,56 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.google.firebase.Firebase
 import com.google.firebase.auth.auth
+import com.lzg.pas_project_final.ui.theme.outlineDark
 
 @Composable
-fun SignInScreen() {
+fun SignInScreen(navController: NavController) {
     var email by remember {mutableStateOf("")}
     var password by remember { mutableStateOf("") }
     var showError by remember { mutableStateOf(false) }
     val auth = Firebase.auth
+    Column(
+        modifier = Modifier.fillMaxSize(),
+        verticalArrangement = Arrangement.Bottom,
+        horizontalAlignment = Alignment.Start
+    ){
+        OutlinedIconButton(
+            onClick = { /*TODO*/ },
+            modifier = Modifier.padding(15.dp))
+        {
+            Icon(
+                painter = painterResource(id = R.drawable.fingerprint_24dp_fill0_wght400_grad0_opsz24),
+                contentDescription = "Fingerprint Icon")
+        }
+    }
 
     Column(
         modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+        Image(
+            painter = painterResource(id = R.drawable.logoo),
+            contentDescription = "Logo Desfibrilador",
+            modifier = Modifier.padding(30.dp)
+        )
+        Text(
+            text = "Buscador de Desfibriladores",
+            modifier = Modifier.padding(16.dp),
+            fontSize = 20.sp,
+        )
+        Text(
+            text = "Inicie sesión para continuar",
+            modifier = Modifier.padding(5.dp),
+            fontSize = 15.sp,
+        )
         OutlinedTextField(
             value = email ,
             onValueChange = { email = it },
@@ -86,6 +122,7 @@ fun SignInScreen() {
                             Log.d("SignInScreen", "signInWithEmail:success")
                             val user = auth.currentUser
                             // Navigate to the next screen or update UI accordingly
+                            navController.navigate("MapScreen")
                         }
 
                         else if (email.isEmpty() || password.isEmpty() && !task.isSuccessful) {

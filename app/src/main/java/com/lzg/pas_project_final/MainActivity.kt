@@ -7,7 +7,11 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Scaffold
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import com.lzg.pas_project_final.ui.theme.PAS_Project_FinalTheme
 
 class MainActivity : ComponentActivity() {
@@ -18,9 +22,19 @@ class MainActivity : ComponentActivity() {
         setContent {
             PAS_Project_FinalTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()){
-                    SignInScreen()
+                    Navigation()
+                    //SignInScreen(navController = rememberNavController())
                 }
             }
         }
+    }
+}
+
+@Composable
+fun Navigation() {
+    val navController = rememberNavController()
+    NavHost(navController = navController, startDestination = "SignInScreen") {
+        composable("SignInScreen") { SignInScreen(navController) }
+        composable("MapScreen") { MapScreen() }
     }
 }
