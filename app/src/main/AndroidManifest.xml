@@ -13,8 +13,8 @@
         android:theme="@style/Theme.PAS_Project_Final"
         tools:targetApi="31">
         <meta-data
-            android:name="com.google.android.geo.GOOGLE_MAPS_API_KEY"
-            android:value="$AIzaSyBweYLzXvCtNJLIvh6XGODoElGTzT1TOLQ" />
+            android:name="com.google.android.geo.API_KEY"
+            android:value="${MAPS_API_KEY}" />
         <activity
             android:name=".MainActivity"
             android:exported="true"
