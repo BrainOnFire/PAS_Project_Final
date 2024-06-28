@@ -9,6 +9,16 @@ plugins {
     id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
 }
 
+secrets {
+    // Optionally specify a different file name containing your secrets.
+    // The plugin defaults to "local.properties"
+    propertiesFileName = "local.properties"
+
+    // A properties file containing default secret values. This file can be
+    // checked in version control.
+    //defaultPropertiesFileName = "local.defaults.properties"
+}
+
 android {
     namespace = "com.lzg.pas_project_final"
     compileSdk = 34
@@ -65,10 +75,8 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
-    //implementation(libs.firebase.common.ktx)
-    //implementation(libs.firebase.auth.ktx)
     implementation(libs.androidx.lifecycle.livedata.ktx)
-    //implementation(libs.firebase.auth)
+    implementation(libs.androidx.appcompat)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -76,10 +84,6 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
-
-    //Import the Firebase BoM & Bundle
-    //implementation(platform(libs.firebase.bom))
-    //implementation(libs.bundles.firebase)
 
     //Navigation
     implementation("androidx.navigation:navigation-compose:2.7.7")
@@ -108,4 +112,7 @@ dependencies {
 
     // Optionally, you can include the widgets library for ScaleBar, etc.
     implementation("com.google.maps.android:maps-compose-widgets:5.0.3")
+
+    // Fingerprint detection library
+    implementation("androidx.biometric:biometric:1.1.0")
 }

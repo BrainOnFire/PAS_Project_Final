@@ -1,6 +1,10 @@
 package com.lzg.pas_project_final
 
 import android.util.Log
+import androidx.appcompat.app.AppCompatActivity
+import androidx.biometric.BiometricManager.Authenticators.BIOMETRIC_STRONG
+import androidx.biometric.BiometricManager.Authenticators.DEVICE_CREDENTIAL
+import androidx.biometric.BiometricPrompt
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -12,7 +16,6 @@ import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedIconButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
@@ -24,28 +27,65 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.content.ContextCompat
 import androidx.navigation.NavController
 import com.google.firebase.Firebase
 import com.google.firebase.auth.auth
-import com.lzg.pas_project_final.ui.theme.outlineDark
 
 @Composable
 fun SignInScreen(navController: NavController) {
+    val context = LocalContext.current
     var email by remember {mutableStateOf("")}
     var password by remember { mutableStateOf("") }
     var showError by remember { mutableStateOf(false) }
     val auth = Firebase.auth
+
+    val executor = ContextCompat.getMainExecutor(context)
+    val biometricPrompt = remember {
+        BiometricPrompt(context as AppCompatActivity, executor,
+            object : BiometricPrompt.AuthenticationCallback() {
+                override fun onAuthenticationError(
+                    errorCode: Int,
+                    errString: CharSequence
+                ) {
+                    super.onAuthenticationError(errorCode, errString)
+                    showError = true
+                }
+
+                override fun onAuthenticationSucceeded(
+                    result: BiometricPrompt.AuthenticationResult
+                ) {
+                    super.onAuthenticationSucceeded(result)
+                    navController.navigate("MapScreen")
+                }
+
+                override fun onAuthenticationFailed() {
+                    super.onAuthenticationFailed()
+                    showError = true
+                }
+            })
+    }
+
+    val promptInfo = BiometricPrompt.PromptInfo.Builder()
+        .setTitle("Biometric login for my app")
+        .setSubtitle("Log in using your biometric credential")
+        .setNegativeButtonText("Use account password")
+        .setAllowedAuthenticators(BIOMETRIC_STRONG or DEVICE_CREDENTIAL)
+        .build()
+
     Column(
         modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Bottom,
         horizontalAlignment = Alignment.Start
     ){
         OutlinedIconButton(
-            onClick = { /*TODO*/ },
+            // Prompt appears when user clicks fingerprint icon.
+            onClick = {biometricPrompt.authenticate(promptInfo)},
             modifier = Modifier.padding(15.dp))
         {
             Icon(

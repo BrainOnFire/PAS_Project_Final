@@ -23,7 +23,6 @@ class MainActivity : ComponentActivity() {
             PAS_Project_FinalTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()){
                     Navigation()
-                    //SignInScreen(navController = rememberNavController())
                 }
             }
         }
