@@ -1,3 +1,5 @@
 <resources>
-    <string name="app_name">Búsqueda de Desfibriladores</string>
+    <string
+        name="app_name">Búsqueda de Desfibriladores</string>
+    <string name="default_web_client_id">677491417848-hjaj9054a7pu9ugh4d73ta2dosatud10.apps.googleusercontent.com</string>
 </resources>

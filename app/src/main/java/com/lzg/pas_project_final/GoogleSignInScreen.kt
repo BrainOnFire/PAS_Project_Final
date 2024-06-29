@@ -37,13 +37,14 @@ fun SignInScreen(navController: NavController) {
     var password by remember { mutableStateOf("") }
     var showError by remember { mutableStateOf(false) }
     val auth = Firebase.auth
+
     Column(
         modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Bottom,
         horizontalAlignment = Alignment.Start
     ){
         OutlinedIconButton(
-            onClick = { /*TODO*/ },
+            onClick = { /*TODO*/ }, //Agregar fingerprint sensing
             modifier = Modifier.padding(15.dp))
         {
             Icon(
@@ -120,7 +121,9 @@ fun SignInScreen(navController: NavController) {
                             Log.d("SignInScreen", "signInWithEmail:success")
                             val user = auth.currentUser
                             // Navigate to the next screen or update UI accordingly
-                            navController.navigate("MapScreen")
+                            navController.navigate("MapScreen"){
+                                popUpTo("SignInScreen") {inclusive = true}
+                            }
                         }
 
                         else if (email.isEmpty() || password.isEmpty() && !task.isSuccessful) {
@@ -139,5 +142,20 @@ fun SignInScreen(navController: NavController) {
         ) {
             Text(text = "Sign In")
         }
+
+//        // Google Sign In Button
+//        OutlinedIconButton(
+//            onClick = { /*TODO*/ },
+//            modifier = Modifier.padding(16.dp)) {
+//            Icon(
+//                imageVector = Icons.Filled.Email, /////Cambiar por el icono de google
+//                contentDescription = "Google Sign In"
+//            )
+//            Spacer(Modifier.padding(8.dp)) // Add some space between icon and text
+//            Text("Sign in with Google")
+//        }
     }
 }
+
+
+

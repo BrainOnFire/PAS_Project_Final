@@ -12,7 +12,12 @@
           "package_name": "com.lzg.pas_project_final"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "677491417848-hjaj9054a7pu9ugh4d73ta2dosatud10.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyDzyU-1uxZdDR8e9fr9VxImy5Bvs4N-HrE"
@@ -20,7 +25,12 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "677491417848-hjaj9054a7pu9ugh4d73ta2dosatud10.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }

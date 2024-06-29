@@ -78,6 +78,7 @@ dependencies {
     //implementation(libs.firebase.common.ktx)
     //implementation(libs.firebase.auth.ktx)
     implementation(libs.androidx.lifecycle.livedata.ktx)
+    implementation(libs.play.services.location)
     //implementation(libs.firebase.auth)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
@@ -95,7 +96,7 @@ dependencies {
     implementation("androidx.navigation:navigation-compose:2.7.7")
 
     //Google Sign In SDK
-    //implementation("com.google.android.gms:play-services-auth:21.2.0")
+    implementation("com.google.android.gms:play-services-auth:21.2.0")
 
     //Firebase SDK
     implementation(platform("com.google.firebase:firebase-bom:33.1.0"))
