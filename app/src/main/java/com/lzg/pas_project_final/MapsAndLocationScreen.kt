@@ -1,18 +1,16 @@
 package com.lzg.pas_project_final
 
 import android.Manifest
+import android.annotation.SuppressLint
+import android.content.Context
 import android.content.pm.PackageManager
 import android.util.Log
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import com.google.maps.android.compose.GoogleMap
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FabPosition
 import androidx.compose.material3.FloatingActionButton
@@ -23,24 +21,30 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.GeoPoint
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
 import com.google.maps.android.compose.*
 import kotlinx.coroutines.tasks.await
 import java.io.BufferedReader
 import java.io.InputStreamReader
+import androidx.compose.material3.*
+import androidx.compose.ui.unit.dp
+import kotlinx.coroutines.delay
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MapScreen(){
+    var showSnackbar by remember { mutableStateOf(false) }
+    val userId = FirebaseAuth.getInstance().currentUser?.uid ?: "unknown"
     var isMapLoaded by remember { mutableStateOf(false) }
     var defibrillatorLocations by remember { mutableStateOf(emptyList<LatLng>()) }
     var userLocation by remember { mutableStateOf<LatLng?>(null) }
@@ -112,18 +116,29 @@ fun MapScreen(){
         floatingActionButton = {
             FloatingActionButton(
                 containerColor = MaterialTheme.colorScheme.primary,
-//                modifier = Modifier
-//                    .size(56.dp)
-//                    .background(color = Color.Red)
-//                    .border(BorderStroke(width = 2.dp, color = Color.Black)),
-                onClick = { /*TODO*/ }) {
+                onClick = { sendUserLocationToFirestore(context, userId)
+                            showSnackbar = true
+                }) {
+
                 Icon(
                     painter = painterResource(id = R.drawable.heart_broken_24dp_fill0_wght400_grad0_opsz24),
                     contentDescription = "Emergency Heart Icon"
                 )
             }
         },
-        floatingActionButtonPosition = FabPosition.Center
+        floatingActionButtonPosition = FabPosition.Center,
+        snackbarHost = {
+            if (showSnackbar) {
+                Snackbar(
+                    modifier = Modifier.padding(8.dp), // Add padding if needed
+                    action = {
+                        TextButton(onClick = { showSnackbar = false }) {
+                            Text("OK")
+                        }
+                    }
+                ) { Text("Ubicación enviada") }
+            }
+        }
 
     ){
         paddingValues ->
@@ -140,30 +155,57 @@ fun MapScreen(){
                 ),
                 cameraPositionState = rememberCameraPositionState {
                     if (userLocation != null) {
-                        position = CameraPosition.fromLatLngZoom(userLocation!!, 15f) // Adjust zoom as needed
+                        position = CameraPosition.fromLatLngZoom(userLocation!!, 200f) // Adjust zoom as needed
                     }
                 }
             ) {
+
                 // Add markers for each defibrillator location
                 defibrillatorLocations.forEach { location ->
                     Marker(
                         state = MarkerState(position = location),
-                        title = "Desfibrilador" // You can customize the title
+                        title = "Desfibrilador"
                     )
                 }
+            }
+        }
 
-                // Add marker for user location if available
-                userLocation?.let {
-                    Marker(
-                        state = MarkerState(position = it),
-                        title = "You are here"
-                    )
-                }
+        LaunchedEffect(key1 = showSnackbar) {
+            if (showSnackbar) {
+                delay(2000)
+                showSnackbar = false // Hide Snackbar
             }
         }
     }
 }
 
+// Function to send user location to Firestore
+@SuppressLint("MissingPermission")
+private fun sendUserLocationToFirestore(context: Context, userId: String) {
+    val fusedLocationClient = LocationServices.getFusedLocationProviderClient(context)
+    fusedLocationClient.lastLocation
+        .addOnSuccessListener { location ->
+            if (location != null) {
+                val geoPoint = GeoPoint(location.latitude, location.longitude)
+                // Firestore path
+                FirebaseFirestore.getInstance()
+                    .collection("data_ubicacion")
+                    .document("latlog")
+                    .update(mapOf(userId to geoPoint))
+                    .addOnSuccessListener {
+                        Log.d("MapScreen", "Location successfully added to Firestore for user: $userId")
+                    }
+                    .addOnFailureListener { e ->
+                        Log.e("MapScreen", "Error adding location to Firestore", e)
+                    }
+            }
+        }
+        .addOnFailureListener { e ->
+            Log.e("MapScreen", "Error getting user location", e)
+        }
+}
+
+// Function to parse the CSV content into a list of LatLng objects
 fun parseCsv(csvContent: String): List<LatLng> {
     val locations = mutableListOf<LatLng>()
     val lines = csvContent.split("\n")

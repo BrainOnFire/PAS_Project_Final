@@ -10,13 +10,7 @@ plugins {
 }
 
 secrets {
-    // Optionally specify a different file name containing your secrets.
-    // The plugin defaults to "local.properties"
     propertiesFileName = "local.properties"
-
-    // A properties file containing default secret values. This file can be
-    // checked in version control.
-    //defaultPropertiesFileName = "local.defaults.properties"
 }
 
 android {
@@ -66,7 +60,6 @@ android {
 }
 
 dependencies {
-
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
@@ -75,11 +68,8 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
-    //implementation(libs.firebase.common.ktx)
-    //implementation(libs.firebase.auth.ktx)
     implementation(libs.androidx.lifecycle.livedata.ktx)
     implementation(libs.play.services.location)
-    //implementation(libs.firebase.auth)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -88,10 +78,6 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 
-    //Import the Firebase BoM & Bundle
-    //implementation(platform(libs.firebase.bom))
-    //implementation(libs.bundles.firebase)
-
     //Navigation
     implementation("androidx.navigation:navigation-compose:2.7.7")
 
@@ -99,24 +85,20 @@ dependencies {
     implementation("com.google.android.gms:play-services-auth:21.2.0")
 
     //Firebase SDK
-    implementation(platform("com.google.firebase:firebase-bom:33.1.0"))
+    implementation(platform("com.google.firebase:firebase-bom:33.1.1"))
     implementation("com.google.firebase:firebase-database")
     implementation("com.google.firebase:firebase-storage")
     implementation("com.google.firebase:firebase-auth")
     implementation("com.google.firebase:firebase-firestore")
 
-    //Firebase UI Library
-    //implementation("com.firebaseui:firebase-ui-auth")
-    //implementation("com.firebaseui:firebase-ui-database")
-
     //Maps SDK Dependencies
-    implementation("com.google.android.gms:play-services-maps:18.2.0")
-    implementation("com.google.maps.android:maps-compose:5.0.3")
+    implementation("com.google.android.gms:play-services-maps:19.0.0")
+    implementation("com.google.maps.android:maps-compose:5.0.4")
 
     // Optionally, you can include the Compose utils library for Clustering,
     // Street View metadata checks, etc.
-    implementation("com.google.maps.android:maps-compose-utils:5.0.3")
+    implementation("com.google.maps.android:maps-compose-utils:5.0.4")
 
     // Optionally, you can include the widgets library for ScaleBar, etc.
-    implementation("com.google.maps.android:maps-compose-widgets:5.0.3")
+    implementation("com.google.maps.android:maps-compose-widgets:5.0.4")
 }
