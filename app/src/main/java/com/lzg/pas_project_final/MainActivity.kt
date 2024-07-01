@@ -50,6 +50,7 @@ fun Navigation() {
         startDestination = "SignInScreen")
     {
         composable("SignInScreen") { SignInScreen(navController) }
-        composable("MapScreen") { MapScreen() }
+        composable("MapScreen") { MapScreen(navController) }
+        composable("ProfileScreen") { ProfileScreen() }
     }
 }

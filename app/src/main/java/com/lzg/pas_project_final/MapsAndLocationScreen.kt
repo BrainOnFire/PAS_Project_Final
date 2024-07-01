@@ -11,6 +11,8 @@ import androidx.compose.foundation.layout.Box
 import com.google.maps.android.compose.GoogleMap
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FabPosition
 import androidx.compose.material3.FloatingActionButton
@@ -38,11 +40,12 @@ import java.io.BufferedReader
 import java.io.InputStreamReader
 import androidx.compose.material3.*
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import kotlinx.coroutines.delay
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MapScreen(){
+fun MapScreen(navController: NavController){
     var showSnackbar by remember { mutableStateOf(false) }
     val userId = FirebaseAuth.getInstance().currentUser?.uid ?: "unknown"
     var isMapLoaded by remember { mutableStateOf(false) }
@@ -109,6 +112,14 @@ fun MapScreen(){
             TopAppBar(
                 title = {
                     Text("Busqueda de desfibriladores")
+                },
+                actions = {
+                    IconButton(onClick = { navController.navigate("ProfileScreen") }) {
+                        Icon(
+                            imageVector = Icons.Filled.AccountCircle,
+                            contentDescription = "Profile"
+                        )
+                    }
                 }
             )
         },
