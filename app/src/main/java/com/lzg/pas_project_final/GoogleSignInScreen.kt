@@ -119,7 +119,6 @@ fun SignInScreen(navController: NavController) {
                         if (email.isNotEmpty() && password.isNotEmpty() && task.isSuccessful){
                             // Sign in success, update UI with the signed-in user's information
                             Log.d("SignInScreen", "signInWithEmail:success")
-                            val user = auth.currentUser
                             // Navigate to the next screen or update UI accordingly
                             navController.navigate("MapScreen"){
                                 popUpTo("SignInScreen") {inclusive = true}

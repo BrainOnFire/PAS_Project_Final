@@ -47,7 +47,7 @@ import kotlinx.coroutines.delay
 @Composable
 fun MapScreen(navController: NavController){
     var showSnackbar by remember { mutableStateOf(false) }
-    val userId = FirebaseAuth.getInstance().currentUser?.uid ?: "unknown"
+    val userId = FirebaseAuth.getInstance().currentUser?.uid ?: ""
     var isMapLoaded by remember { mutableStateOf(false) }
     var defibrillatorLocations by remember { mutableStateOf(emptyList<LatLng>()) }
     var userLocation by remember { mutableStateOf<LatLng?>(null) }
@@ -114,7 +114,7 @@ fun MapScreen(navController: NavController){
                     Text("Busqueda de desfibriladores")
                 },
                 actions = {
-                    IconButton(onClick = { navController.navigate("ProfileScreen") }) {
+                    IconButton(onClick = { navController.navigate("ProfileScreen/$userId") }) {
                         Icon(
                             imageVector = Icons.Filled.AccountCircle,
                             contentDescription = "Profile"

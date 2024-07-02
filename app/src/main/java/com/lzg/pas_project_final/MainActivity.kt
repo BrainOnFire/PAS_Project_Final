@@ -11,9 +11,11 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.lzg.pas_project_final.ui.theme.PAS_Project_FinalTheme
 
 class MainActivity : ComponentActivity() {
@@ -38,7 +40,6 @@ class MainActivity : ComponentActivity() {
 
     override fun onConfigurationChanged(newConfig: Configuration) {
         super.onConfigurationChanged(newConfig)
-        // Handle configuration changes here if needed (e.g.,adjust layout)
     }
 }
 
@@ -51,6 +52,12 @@ fun Navigation() {
     {
         composable("SignInScreen") { SignInScreen(navController) }
         composable("MapScreen") { MapScreen(navController) }
-        composable("ProfileScreen") { ProfileScreen() }
+        composable(
+            "ProfileScreen/{userId}",
+            arguments = listOf(navArgument("userId") { type = NavType.StringType })
+        ) { backStackEntry ->
+            val userId = backStackEntry.arguments?.getString("userId") ?: ""
+            ProfileScreen(userId)
+        }
     }
 }
