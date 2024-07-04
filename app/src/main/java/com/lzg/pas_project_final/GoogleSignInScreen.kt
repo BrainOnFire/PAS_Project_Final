@@ -38,21 +38,6 @@ fun SignInScreen(navController: NavController) {
     var showError by remember { mutableStateOf(false) }
     val auth = Firebase.auth
 
-//    Column(
-//        modifier = Modifier.fillMaxSize(),
-//        verticalArrangement = Arrangement.Bottom,
-//        horizontalAlignment = Alignment.Start
-//    ){
-//        OutlinedIconButton(
-//            onClick = { /*TODO*/ }, //Agregar fingerprint sensing
-//            modifier = Modifier.padding(15.dp))
-//        {
-//            Icon(
-//                painter = painterResource(id = R.drawable.fingerprint_24dp_fill0_wght400_grad0_opsz24),
-//                contentDescription = "Fingerprint Icon")
-//        }
-//    }
-
     Column(
         modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Center,
